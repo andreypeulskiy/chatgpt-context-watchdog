@@ -1,0 +1,3 @@
+4e137ca13627896a2f2ccbd49b70e98d090fa56b60661c77c0a29c6d89889b4b  dist/chatgpt-context-watchdog-1.0.0.user.js
+ab14bb21c52b4ceb00a46fa85696773d797427e688e451107b39fc792ad3f19d  dist/chatgpt-context-watchdog-1.0.0.min.user.js
+600ea08d516a01d4a5f1747fa1ccc7c1a1b34510dba7c961bd867b5c1e19eb2f  dist/chatgpt-context-watchdog-1.0.0.dev.user.js

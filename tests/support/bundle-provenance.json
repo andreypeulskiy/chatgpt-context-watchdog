@@ -1,0 +1,14 @@
+{
+  "meaning": "QA-only source and prebuilt artifact provenance for this release tree.",
+  "sourceSha256": "f9f347aa17c71a89b91c144a47e72eade09136faf521bbf7e0a3946078bd4419",
+  "artifacts": {
+    "stable": {
+      "relative": "dist/chatgpt-context-watchdog-1.0.0.user.js",
+      "sha256": "4e137ca13627896a2f2ccbd49b70e98d090fa56b60661c77c0a29c6d89889b4b"
+    },
+    "dev": {
+      "relative": "dist/chatgpt-context-watchdog-1.0.0.dev.user.js",
+      "sha256": "600ea08d516a01d4a5f1747fa1ccc7c1a1b34510dba7c961bd867b5c1e19eb2f"
+    }
+  }
+}

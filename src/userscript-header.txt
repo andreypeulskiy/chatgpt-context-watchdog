@@ -1,0 +1,43 @@
+// ==UserScript==
+// @name         ChatGPT Context Watchdog (Local)
+// @namespace    local.chatgpt.context.watchdog
+// @version      1.0.0
+// @author       f0rset1
+// @description  Local-only context size watchdog for ChatGPT. One guarded, same-origin cache-only favicon lookup; no chat-data network traffic.
+// @match        https://chatgpt.com/*
+// @match        https://chat.openai.com/*
+// @grant        none
+// @run-at       document-idle
+// @noframes
+// ==/UserScript==
+
+/*
+  ChatGPT Context Watchdog (Local)
+
+  Community attribution:
+  Inspired by the architecture and ideas of:
+  "ChatGPT-Token_Counter" by Pushpak1203
+  https://github.com/Pushpak1203/ChatGPT-Token_Counter
+
+  Design constraints:
+  - Chromium; one self-contained, local-only Tampermonkey userscript
+  - DOM observation and bounded one-shot checks; no network interception,
+    server downloads or periodic polling; one favicon cache-only lookup is allowed
+  - Per-chat UUID-keyed state:v2 ledger; ordinary capture does not overwrite
+    known messages; explicit Edit/Regenerate and confirmed Repair are exceptions
+  - SPA route and DOM ownership checks prevent cross-chat/ghost capture
+  - Read-only Audit; Repair and Undo require explicit confirmation
+  - User attachments, heuristic image estimates and large-paste fallback
+  - Local context budgets, calibration and HANDOFF without model internals
+
+  Scope and limitations:
+  First-seen, confirmed-complete messages may be backfilled on load or scroll.
+  Partially hydrated messages are deferred; ordinary scans skip known UUIDs.
+  Explicit edits/regenerations can update a known UUID after completion.
+  Audit may remeasure observed messages for comparison but never edits the ledger.
+  The estimates use observable locally recorded chat text and accessible user
+  attachments; they are not the model's actual context utilization.
+  Forecasts are heuristic, and ambiguous message UUIDs are deferred.
+  The script cannot inspect hidden system context, actual Project retrieval,
+  internal compaction or the model's true remaining context window.
+*/

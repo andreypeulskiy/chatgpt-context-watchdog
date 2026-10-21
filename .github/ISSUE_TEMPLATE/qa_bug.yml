@@ -1,0 +1,56 @@
+name: QA bug report
+description: Report a reproducible defect using synthetic, non-sensitive test data
+title: "[QA] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Privacy:** Never upload real conversations, authentication tokens, attachments, diagnostic storage exports, or private data. For suspected data exposure, use private security reporting instead.
+  - type: input
+    id: version
+    attributes:
+      label: Userscript @version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Variant
+      options: [Stable, Stable (minified), Dev]
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and Tampermonkey versions
+    validations:
+      required: true
+  - type: input
+    id: styles
+    attributes:
+      label: Appearance (Light/Dark, Soft/Sharp, viewport width)
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce (synthetic chat only)
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      options: [Always, Intermittent, Once]

@@ -1,0 +1,38 @@
+/* DEV ONLY: narrow browser viewport / device emulation.
+ * Injected into UI_CSS by tools/build.cjs --dev at build time.
+ * Never ship this file's rules in the Stable userscript.
+ * Preserve the existing narrow-viewport responsive behavior. */
+
+      @media (max-width: 350px) {
+        #cgpt-context-watchdog-root .cw-title-info .cw-brand-mark { display: none; }
+        #cgpt-context-watchdog-root .cw-title { grid-template-columns: minmax(0,1fr) 128px; }
+        #cgpt-context-watchdog-root .cw-title-info strong { font-size: 13px; }
+        #cgpt-context-watchdog-root .cw-local-row { gap: 3px; transform: translateY(-6px); }
+        #cgpt-context-watchdog-root .cw-local { font-size: 9px; letter-spacing: 0; }
+        #cgpt-context-watchdog-root .cw-toolbar { gap: 2px; transform: translateY(-5px); }
+        #cgpt-context-watchdog-root .cw-tool-button { width: 24px; height: 26px; }
+      }
+      @media (max-width: 320px) {
+        #cgpt-context-watchdog-root .cw-tools-nav { gap: 5px; }
+        #cgpt-context-watchdog-root .cw-view-setting-row { grid-template-columns: 38px minmax(0,1fr); }
+        #cgpt-context-watchdog-root .cw-view-options { gap: 4px; }
+      }
+      @media (max-width: 360px) {
+        /* Keep long navigation labels readable and wholly visible at 320px. */
+        #cgpt-context-watchdog-root .cw-tabs button,
+        #cgpt-context-watchdog-root .cw-mini-nav .cw-mini-tab { font-size: 11px; }
+        #cgpt-context-watchdog-root .cw-context-primary-row { gap: 4px; }
+        #cgpt-context-watchdog-root .cw-context-primary-label { font-size: 12px; }
+        #cgpt-context-watchdog-root .cw-chip .cw-metric,
+        #cgpt-context-watchdog-root .cw-context-range,
+        #cgpt-context-watchdog-root .cw-forecast-cards .cw-forecast-opt,
+        #cgpt-context-watchdog-root .cw-forecast-cards .cw-forecast-pess { font-size: 14px; }
+      }
+      @media (max-width: 320px) {
+        #cgpt-context-watchdog-root .cw-estimation-settings .cw-mini-nav { gap: 3px; }
+        #cgpt-context-watchdog-root .cw-estimation-settings .cw-mini-tab { padding-left: 0; padding-right: 0; }
+      }
+      @media (max-width: 600px) {
+        #cgpt-context-watchdog-root { right: 10px; bottom: 135px; }
+        .cw-panel { width: min(350px, calc(100vw - 20px)); }
+      }

@@ -1,0 +1,486 @@
+{
+  "css": {
+    "node": [],
+    "browser": [
+      {
+        "file": "accounting-dialogs-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "cosmetics-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "typography-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "budget-bars-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "shared-budget-legends-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "css-variants-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "badge-placement-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "logo-circle-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "shared-geometry-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "brand-colors-ui.py",
+        "lane": "visual"
+      }
+    ]
+  },
+  "ui": {
+    "node": [
+      {
+        "file": "panel-module-boundaries.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "interface-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "ui-architecture-boundary.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "ui-cycles-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "ui-coordinator-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "metric-details-handoff.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "details-technical-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "history-panel-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "badge-hit-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "badge-sharp-geometry-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "ui-action-styles-esm.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "diagnostics-copy-readonly-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "handoff-editor-state-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "context-details-consistency.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "history-lazy-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "notification-lifecycle-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "about-help-contract.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "accessibility-contract.cjs",
+        "lane": "functional"
+      }
+    ],
+    "browser": [
+      {
+        "file": "pin-context-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "record-limit-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "notifications-wipe-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "panel-remount-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "details-handoff-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "details-technical-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "history-panel-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "badge-panel-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "badge-hit-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "dom-image-cache-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "badge-drag-tooltip-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "badge-sharp-geometry-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "panel-position-stability-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "wipe-immediate-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "pause-availability-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "pause-performance-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "availability-attribute-cost-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "attachment-background-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "empty-file-badge-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "empty-budget-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "settings-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "about-disclosures-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "numeric-settings-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "budget-navigation-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "dynamic-hints-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "ui-action-styles-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "dialog-dismissal-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "diagnostics-copy-readonly-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "handoff-storage-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "appearance-preferences-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "context-details-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "history-lazy-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "settings-navigation-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "notification-lifecycle-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "final-polish-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "about-help-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "accessibility-cross-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "compact-header-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "site-icon-001-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "site-icon-cache-001-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "logo-tooltip-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "favicon-brand-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "panel-geometry-live-ui.py",
+        "lane": "functional"
+      },
+      {
+        "file": "panel-geometry-edges-ui.py",
+        "lane": "visual"
+      },
+      {
+        "file": "handoff-logo-ui.py",
+        "lane": "functional"
+      }
+    ]
+  },
+  "logic": {
+    "node": [
+      {
+        "file": "audit-repair-ambiguity.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "attachment-pause-submission-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "regression-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "thinking-route-regression.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "storage-esm-regression.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "estimator-collector-contract.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "observer-behavior.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "calibration-profiling-contract.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "attachment-metadata-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "settings-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "image-cache-invalidation-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "image-identity-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "ledger-audit-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "attachment-module-boundaries.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "collector-pipeline-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "capture-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "scan-pipeline-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "storage-module-boundaries.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "storage-current-contract.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "runtime-session-contract.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "revision-file-binding.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "context-estimate-core-isolation.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "core-ledger-boundary.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "runtime-storage-boundary.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "route-startup-boundary.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "wipe-stale-ledger.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "cycle-boundaries.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "application-storage-boundary.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "numeric-settings-esm.cjs",
+        "lane": "functional"
+      }
+    ],
+    "browser": []
+  },
+  "security": {
+    "node": [
+      {
+        "file": "data-integrity.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "attachment-write-integrity.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "security-gate-contract.cjs",
+        "lane": "functional"
+      }
+    ],
+    "browser": [
+      {
+        "file": "security-local-only-ui.py",
+        "lane": "functional"
+      }
+    ]
+  },
+  "build": {
+    "node": [
+      {
+        "file": "documentation-regression.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "css-build-isolation.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "release-metadata.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "qa-lanes-regression.cjs",
+        "lane": "release"
+      },
+      {
+        "file": "qa-report-regression.cjs",
+        "lane": "release"
+      }
+    ],
+    "browser": []
+  },
+  "integration": {
+    "node": [],
+    "browser": [
+      {
+        "file": "browser-e2e.py",
+        "lane": "functional"
+      },
+      {
+        "file": "browser-completion.py",
+        "lane": "functional"
+      }
+    ]
+  }
+}

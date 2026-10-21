@@ -1,0 +1,34 @@
+{
+  "auditVersion": 1,
+  "readOnly": true,
+  "containsMessageText": false,
+  "summary": {
+    "textMessages": 1,
+    "textTokens": 18,
+    "textChars": 49,
+    "userMessages": 1,
+    "assistantMessages": 0,
+    "files": 1,
+    "localParsedFiles": 1,
+    "imageFileRecords": 0,
+    "filesUnknownSize": 0,
+    "domImageRecords": 2,
+    "stableImageSlots": 2,
+    "unsupportedImageKeys": 0,
+    "effectiveImages": 2,
+    "repairHistoryEntries": 0
+  },
+  "findingCounts": {
+    "critical": 0,
+    "warning": 0,
+    "info": 0
+  },
+  "suppressedFindings": 0,
+  "findings": [],
+  "limitations": [
+    "A snapshot alone cannot prove which chat DOM was mounted or detect races between tabs.",
+    "Unknown file sizes and missing related messages may be normal; no automatic repair is performed.",
+    "Unknown DOM-image key formats are excluded from counts but never modified by this audit.",
+    "Full context-window occupancy cannot be calculated from this ledger without current settings and server-side context behavior."
+  ]
+}

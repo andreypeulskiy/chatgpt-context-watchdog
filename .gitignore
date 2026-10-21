@@ -1,0 +1,11 @@
+node_modules/
+/tests/.generated/
+**/__pycache__/
+*.pyc
+*.log
+.coverage
+coverage/
+.playwright/
+.env
+.env.*
+.DS_Store

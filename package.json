@@ -1,0 +1,44 @@
+{
+  "name": "chatgpt-context-watchdog",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local-only ChatGPT context estimation userscript; Stable and Dev builds",
+  "scripts": {
+    "build": "node tools/build.cjs",
+    "build:dev": "node tools/build.cjs --dev",
+    "build:min": "node tools/build.cjs --minify",
+    "check": "npm run build && npm run build:dev && npm run build:min && node tools/verify-modules.cjs && node tools/source-safety-check.cjs && node tools/verify-build.cjs && node tools/architecture-guards.cjs && node tools/style-check.cjs",
+    "test": "node tools/run-tests.cjs logic",
+    "typecheck:contracts": "tsc --noEmit --strict --lib ES2022,DOM types/context-watchdog.d.ts",
+    "test:browser": "npm run test:integration",
+    "test:ui": "node tools/run-tests.cjs ui",
+    "lint": "npm run build && eslint \"src/**/*.js\" dist/*.user.js",
+    "test:audit": "node --experimental-vm-modules tests/ledger-audit-esm.cjs",
+    "test:release": "node tools/run-tests.cjs release-gate",
+    "test:css": "node tools/run-tests.cjs css",
+    "test:logic": "node tools/run-tests.cjs logic",
+    "test:security": "node tools/run-tests.cjs security",
+    "test:build": "node tools/run-tests.cjs build",
+    "test:integration": "node tools/run-tests.cjs integration",
+    "test:all": "node tools/run-tests.cjs all",
+    "qa:js": "node tools/source-safety-check.cjs && eslint \"src/**/*.js\" \"dist/*.user.js\"",
+    "qa:css": "node tools/style-check.cjs && node tools/css-quality-check.cjs",
+    "qa": "npm run build && npm run build:dev && npm run build:min && npm run qa:js && npm run qa:css && node tools/security-gate.cjs",
+    "test:node": "node tools/run-tests.cjs node-all",
+    "test:functional": "node tools/run-tests.cjs functional",
+    "test:visual": "node tools/run-tests.cjs visual",
+    "test:release-checks": "node tools/run-tests.cjs release",
+    "test:candidate": "node tools/run-tests.cjs candidate-gate"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "eslint": "^9.34.0",
+    "prettier": "^3.6.2",
+    "esbuild": "^0.25.12",
+    "typescript": "^5.9.3",
+    "eslint-plugin-sonarjs": "4.2.2",
+    "stylelint": "17.16.0"
+  }
+}

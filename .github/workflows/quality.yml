@@ -1,0 +1,33 @@
+name: Code quality and Node regression
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  qa-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install development dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Static quality and local-only security gate
+        run: npm run qa
+      - name: TypeScript public contracts
+        run: npm run typecheck:contracts
+      - name: Architecture and source guards
+        run: |
+          node tools/verify-modules.cjs
+          node tools/source-safety-check.cjs
+          node tools/architecture-guards.cjs
+          node tools/style-check.cjs
+      - name: Focused Node regression categories (browser QA separately)
+        run: npm run test:node
+      - name: Stable and minified Stable reproducibility
+        run: |
+          node tools/verify-build.cjs
+          node tools/build.cjs --dev
+          node tools/build.cjs --minify
