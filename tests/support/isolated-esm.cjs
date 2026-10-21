@@ -20,8 +20,9 @@ async function isolatedModules(globals = {}, stubs = {}) {
     assert.ok(full.startsWith(root + path.sep),`Outside src: ${id}`);
     assert.ok(fs.statSync(full).isFile(), `Missing module: ${id}`);
     if (!cache.has(full)) {
-      if (Object.hasOwn(stubs,id)) {
-        const bindings=stubs[id];
+	  const stubId = path.relative(root, full).split(path.sep).join('/');
+	  if (Object.hasOwn(stubs, stubId)) {
+	    const bindings = stubs[stubId];
         cache.set(full,new vm.SyntheticModule(Object.keys(bindings),function() {
           for (const [key,value] of Object.entries(bindings)) this.setExport(key,value);
         },{context,identifier:full}));
