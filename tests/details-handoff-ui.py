@@ -67,7 +67,7 @@ with sync_playwright() as p:
     assert not details_editor.locator('.cw-handoff-unsaved').is_visible()
     details_editor.locator('summary').click()
     original=field.input_value()
-    assert len(original)>1000 and len(original)<4000
+    assert original.strip() and len(original)<=4000
     assert details_editor.locator('.cw-handoff-counter').inner_text()==f'{len(original)} / 4000'
     new=' custom persistent prompt: preserve the exact technical state.'
     field.fill(new)

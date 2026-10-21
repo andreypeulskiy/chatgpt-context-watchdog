@@ -51,7 +51,7 @@ with sync_playwright() as p:
   warning=editor.locator('.cw-handoff-unsaved')
   assert not warning.is_visible()
   original=field.input_value()
-  assert len(original)>1000
+  assert original.strip() and len(original)<=4000
   assert field.get_attribute('maxlength')=='4000'
 
   page.evaluate('window.__externalHandoff("Other-tab prompt A")')

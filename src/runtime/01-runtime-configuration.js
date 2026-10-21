@@ -42,21 +42,11 @@
   const CHAT_PATH_RE = new RegExp(`(?:^|/)c/(${UUID_SOURCE})(?:/|$)`, 'i');
 
   const HANDOFF_MAX_CHARS = 4000;
-  const HANDOFF_PROMPT = `Подготовь PROJECT STATE / HANDOFF для продолжения текущей работы в новом чате.
+  const HANDOFF_PROMPT = `Create a concise, self-contained handoff for continuing this conversation in a new chat. Use the conversation's language.
 
-Это не пересказ переписки. Передай самодостаточное рабочее состояние, достаточное для продолжения без доступа к текущему диалогу.
+In short bullets, capture the goal or topic, current state, key facts, decisions and their reasons, user preferences and constraints, confirmed results, and open questions. Prioritize the latest user corrections and requests. Preserve exact names, values, paths, and links when relevant, and note any files or sources the new chat will need.
 
-Структура:
-1. Цель и статус — что мы делаем, какой результат нужен, что уже готово и какая версия или вариант приняты.
-2. Принятые решения — действующие требования, договорённости, ограничения и важные уточнения пользователя. Отдельно отметь, что нельзя менять без согласования.
-3. Точные данные и артефакты — существенные числа, параметры, имена, версии, форматы, пути и ссылки. Укажи, какие файлы потребуется заново проверить на доступность.
-4. Проверки и проблемы — что подтверждено тестами, что ещё не проверено, какие варианты отвергнуты и почему.
-5. Оставшаяся работа — незавершённые задачи, открытые вопросы и зависимости.
-6. Следующий шаг — конкретное действие, с которого следует начать новому чату.
-
-Правила: сохраняй детали, влияющие на результат, но не дублируй информацию и не пересказывай хронологию без необходимости. Не придумывай недостающие факты; неопределённое явно помечай. Не включай лишние личные данные и секреты. Используй язык текущего разговора.
-
-В конце добавь раздел NEXT CHAT INSTRUCTION — короткое готовое первое сообщение для нового чата, которое указывает, что делать дальше и какие ограничения соблюдать.`;
+Use only the context available to you. Flag gaps and uncertainty, and omit repetition and irrelevant details. End with a ready-to-paste request for the next step.`;
 
   // One validation contract for UI, stored settings and the composer prompt.
   function isValidHandoffPrompt(value) {

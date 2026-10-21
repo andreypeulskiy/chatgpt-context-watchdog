@@ -11,6 +11,12 @@ assert.equal(HANDOFF_MAX_CHARS,4000);
 assert.equal(DEFAULTS.handoffPrompt,HANDOFF_PROMPT);
 assert.ok(isValidHandoffPrompt(HANDOFF_PROMPT));
 assert.ok(isValidHandoffPrompt('a'.repeat(HANDOFF_MAX_CHARS)));
+assert.match(HANDOFF_PROMPT,/^Create a concise, self-contained handoff/);
+assert.match(HANDOFF_PROMPT,/Use the conversation's language/);
+assert.match(HANDOFF_PROMPT,/latest user corrections and requests/);
+assert.match(HANDOFF_PROMPT,/exact names, values, paths, and links/);
+assert.match(HANDOFF_PROMPT,/Flag gaps and uncertainty/);
+assert.match(HANDOFF_PROMPT,/ready-to-paste request for the next step/);
 for(const invalid of [undefined,null,0,{},'', '   ', 'x'.repeat(HANDOFF_MAX_CHARS+1)]){
   assert.equal(isValidHandoffPrompt(invalid),false);
 }
