@@ -93,6 +93,10 @@ with sync_playwright() as p:
     page.locator('.cw-image-pess').fill('90')
     page.locator('.cw-save-attachment-coefficients').click()
     page.locator('[data-cw-mini="attachment"]').click()
+    disclosure=page.locator('.cw-file-contribution')
+    assert not disclosure.evaluate('(el)=>el.open'), 'file table is collapsed by default'
+    disclosure.locator('summary').click()
+    assert disclosure.evaluate('(el)=>el.open'), 'file table opens on request'
     assert page.locator('.cw-file-opt').input_value()=='25'
     assert page.locator('.cw-file-pess').input_value()=='75'
     page.locator('.cw-file-opt').fill('40')

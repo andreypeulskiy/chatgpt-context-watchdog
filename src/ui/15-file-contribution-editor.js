@@ -46,8 +46,8 @@ function bindFileContributionEditor(root) {
     }
     const remove = document.createElement('button');
     remove.type = 'button';
-    remove.className = 'cw-file-rule-remove';
-    remove.textContent = '×';
+    remove.className = 'cw-file-rule-remove cw-close-icon';
+    remove.textContent = '✕';
     remove.setAttribute('aria-label', `Remove .${ext} rule`);
     row.append(remove);
     rows.append(row);

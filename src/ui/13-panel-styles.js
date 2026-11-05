@@ -165,25 +165,21 @@ import { APP } from '../runtime/01-runtime-configuration.js';
       .cw-config-form { margin-top: 7px; }
       /* The four file percentages live in one compact, scroll-free table. */
       .cw-file-rule-head, .cw-file-rule-row {
-        display: grid; grid-template-columns: 62px minmax(0,1fr) minmax(0,1fr) 18px;
+        display: grid; grid-template-columns: 62px minmax(0,1fr) minmax(0,1fr) 20px;
         gap: 4px; align-items: center;
       }
       .cw-file-rule-head { font-size: 9px; color: var(--cw-muted); margin: 8px 0 3px; }
       .cw-file-rule-row { padding: 4px 0; border-bottom: 1px solid rgba(100,116,139,.12); }
       .cw-file-rule-name { min-width: 0; overflow-wrap: anywhere; font-size: 10px; }
       .cw-file-rule-pair { min-width: 0; display: grid; align-items: center; grid-template-columns: minmax(0,1fr) 7px minmax(0,1fr); gap: 1px; }
+      /* Shared numeric-input rules already remove spin buttons and set typography. */
       #${APP}-root .cw-file-rule-pair input[type="number"] {
-        display: block; width: 100%; min-width: 0; padding: 4px 1px;
-        font-size: 10px; text-align: center; appearance: textfield; -moz-appearance: textfield;
+        display: block; padding-inline: 1px; text-align: center;
       }
-      #${APP}-root .cw-file-rule-pair input::-webkit-inner-spin-button,
-      #${APP}-root .cw-file-rule-pair input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
       .cw-file-rule-pair > span { font-size: 9px; text-align: center; }
-      #${APP}-root .cw-file-rule-remove { border: 0; padding: 0; font-size: 15px; line-height: 1; }
       .cw-file-rule-add-line { display: flex; align-items: end; gap: 8px; margin: 7px 0 10px; }
       .cw-file-rule-add-line > label { flex: 1; min-width: 0; }
       #${APP}-root .cw-file-rule-add-line input { width: 100%; }
-      #${APP}-root .cw-file-rule-add-line button { flex: 0 0 auto; }
 
       .cw-config-form label, .cw-settings label {
         display: grid; grid-template-columns: minmax(0, 1fr) 113px;
@@ -311,24 +307,29 @@ import { APP } from '../runtime/01-runtime-configuration.js';
       .cw-about-section dd { margin: 0; color: #4b5563; overflow-wrap: anywhere; }
       .cw-about-credit { color: var(--cw-muted); font-size: var(--cw-type-caption); line-height: 1.45; }
       .cw-about-credit-section { padding-bottom: 3px; }
-      #${APP}-root .cw-close-settings, #${APP}-root .cw-close-about, #${APP}-root .cw-close-limit, #${APP}-root .cw-close-confirm {
+      /* Shared close-icon presentation for dialogs and editable file rules.
+         Action selectors stay separate: removing a rule never closes a dialog. */
+      #${APP}-root .cw-close-icon {
         appearance: none; width: 27px; height: 27px; flex: 0 0 auto;
-        display: grid; place-items: center; border: 0;
+        display: grid; place-items: center; padding: 0; border: 0; box-shadow: none;
         border-radius: calc(7px * var(--cw-radius-scale)); background: transparent; color: inherit; cursor: pointer;
         font: 500 14px/1 system-ui, sans-serif;
       }
-      #${APP}-root .cw-close-settings:hover, #${APP}-root .cw-close-about:hover, #${APP}-root .cw-close-limit:hover, #${APP}-root .cw-close-confirm:hover { background: rgba(100,116,139,.10); }
+      #${APP}-root .cw-close-icon:hover { background: rgba(100,116,139,.10); }
+      #${APP}-root .cw-close-icon:focus-visible { outline: 2px solid var(--cw-accent); outline-offset: 2px; }
+      /* Fit the common close icon into the fourth column of the file table. */
+      #${APP}-root .cw-file-rule-remove { width: 20px; height: 24px; }
       .cw-settings-dialog .cw-settings { margin: 0; padding: 0; border: 0; }
       .cw-maintenance { border-bottom: 1px solid rgba(100,116,139,.22); padding-bottom: 8px; margin-bottom: 9px; }
       .cw-settings-dialog .cw-settings-actions { margin-top: 8px; }
 
-      .cw-handoff-editor, .cw-attachment-core, .cw-metadata-only { margin-top: 11px; padding-top: 8px; border-top: 1px solid rgba(100,116,139,.22); }
+      .cw-handoff-editor, .cw-file-contribution, .cw-attachment-core, .cw-metadata-only { margin-top: 11px; padding-top: 8px; border-top: 1px solid rgba(100,116,139,.22); }
       /* HANDOFF is the first Technical block: its separator belongs below it. */
       .cw-settings-dialog .cw-handoff-editor:first-child {
         margin-top: 0; padding-top: 0; border-top: 0;
         margin-bottom: 11px; padding-bottom: 8px; border-bottom: 1px solid rgba(100,116,139,.22);
       }
-      .cw-handoff-editor > summary, .cw-attachment-core > summary, .cw-metadata-only > summary { font-size: 12px; font-weight: 600; }
+      .cw-handoff-editor > summary, .cw-file-contribution > summary, .cw-attachment-core > summary, .cw-metadata-only > summary { font-size: 12px; font-weight: 600; }
       .cw-handoff-unsaved { margin-left: 8px; font-size: 10px; font-weight: 400; color: #b45309; }
       #${APP}-root[data-cw-palette="dark"] .cw-handoff-unsaved { color: #fbbf24; }
       .cw-handoff-content { margin-top: 7px; }
@@ -406,7 +407,10 @@ import { APP } from '../runtime/01-runtime-configuration.js';
       .cw-recent-error-entry + .cw-recent-error-entry { margin-top: 4px; }
       #${APP}-root[data-cw-palette="dark"] .cw-config-form button, #${APP}-root[data-cw-palette="dark"] .cw-settings button { background: rgba(255,255,255,.08); color: #f3f4f6; }
       #${APP}-root[data-cw-palette="dark"] .cw-config-form button:hover, #${APP}-root[data-cw-palette="dark"] .cw-settings button:hover, #${APP}-root[data-cw-palette="dark"] .cw-tool-button:hover { background: rgba(255,255,255,.13); }
+      /* Generic dark form-button skins must not override the shared close icon. */
       /* Keep Save / Restore defaults as text actions in dark mode too. */
+      #${APP}-root[data-cw-palette="dark"] .cw-config-form .cw-close-icon { background: transparent; color: inherit; }
+      #${APP}-root[data-cw-palette="dark"] .cw-config-form .cw-close-icon:hover { background: rgba(100,116,139,.10); }
       #${APP}-root[data-cw-palette="dark"] .cw-unified-actions button,
       #${APP}-root[data-cw-palette="dark"] .cw-unified-actions button:hover {
         background: transparent; color: var(--cw-accent);
@@ -566,7 +570,7 @@ import { APP } from '../runtime/01-runtime-configuration.js';
       /* Context estimation tabs already separate the content above them.
          Do not draw a second separator before the first item inside a pane. */
       #${APP}-root .cw-estimation-settings .cw-mini-pane { border-top: 0; padding-top: 0; }
-      #${APP}-root .cw-attachment-settings .cw-config-form > .cw-attachment-core:first-child {
+      #${APP}-root .cw-attachment-settings .cw-config-form > .cw-file-contribution:first-child {
         margin-top: 0; padding-top: 0; border-top: 0;
       }
       #${APP}-root .cw-estimation-settings .cw-mini-pane .cw-config-form { margin-top: 0; }

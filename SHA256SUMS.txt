@@ -1,3 +1,3 @@
-6d36af12216a38f3d0bc8564d617768e3a659704f31b6347da04e1807e74300c  dist/chatgpt-context-watchdog-1.1.0.user.js
-7d80a181225d8a9f9a8359d3ab837d883184365ed99cc7cd7224b04f7e987887  dist/chatgpt-context-watchdog-1.1.0.min.user.js
-e28d3db3c434c2f65859c93a1a3b1667b875ce897e2b8cc220c7cbe24e2dc367  dist/chatgpt-context-watchdog-1.1.0.dev.user.js
+cdbffb99c1ed12abab3100ab98e7e46f3adc7bc9dcf26ccb0f7770c86c9a1567  dist/chatgpt-context-watchdog-1.1.0.user.js
+8e054c5bc8cb704722c222acd2d28efe2710293fc409c487805feeb7ca417b5f  dist/chatgpt-context-watchdog-1.1.0.min.user.js
+1153c364d28c22de95fd20616c13467cfc8cd4e13b23484652a0c410ad60a5cb  dist/chatgpt-context-watchdog-1.1.0.dev.user.js

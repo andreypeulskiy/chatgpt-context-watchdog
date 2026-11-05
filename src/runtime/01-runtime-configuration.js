@@ -88,7 +88,7 @@ Use only the context available to you. Flag gaps and uncertainty, and omit repet
     ...Object.fromEntries(METADATA_SETTING_SPECS.map(spec => [spec.key, spec.default])),
     budgetCalibrationBase: null, // pre-calibration anchor; current displayed budgets remain editable
     budgetCalibrationWeight: 0, // weight actually applied at last sample, not live recomputation
-    // Single file contribution interval; no time-based file ageing.
+    // Default parsed-file contribution for extensions without a specific rule.
     fileOptimisticPct: 25,
     filePessimisticPct: 75,
     metadataFileOptimisticPct: 100,

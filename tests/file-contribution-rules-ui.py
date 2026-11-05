@@ -31,6 +31,18 @@ with sync_playwright() as p:
         page.add_script_tag(content=code)
         page.locator('.cw-logo-hit').click()
         page.locator('[data-cw-mini="attachment"]').click()
+        disclosure=page.locator('.cw-file-contribution')
+        assert disclosure.count()==1 and not disclosure.evaluate('(el)=>el.open'),suffix
+        assert not page.locator('.cw-file-rule-add').is_visible(),suffix
+        disclosure.locator('summary').click()
+        assert disclosure.evaluate('(el)=>el.open'),suffix
+        heading_style=disclosure.locator('summary').evaluate('(el)=>({size:getComputedStyle(el).fontSize,weight:getComputedStyle(el).fontWeight})')
+        main_style=page.locator('.cw-attachment-core > summary').evaluate('(el)=>({size:getComputedStyle(el).fontSize,weight:getComputedStyle(el).fontWeight})')
+        assert heading_style==main_style,(suffix,heading_style,main_style)
+        assert page.locator('.cw-file-rule-add').is_visible(),suffix
+        add_style=page.locator('.cw-file-rule-add').evaluate('(el)=>({color:getComputedStyle(el).color,background:getComputedStyle(el).backgroundColor})')
+        save_style=page.locator('.cw-save-attachments').evaluate('(el)=>({color:getComputedStyle(el).color,background:getComputedStyle(el).backgroundColor})')
+        assert add_style==save_style,(suffix,add_style,save_style)
         assert page.locator('.cw-file-opt').input_value()=='25'
         assert page.locator('.cw-file-pess').input_value()=='75'
         assert page.locator('.cw-metadata-file-opt').input_value()=='100'
@@ -40,10 +52,27 @@ with sync_playwright() as p:
         page.locator('.cw-file-rule-add').click()
         row=page.locator('.cw-file-rule-row[data-extension="json"]')
         assert row.count()==1
+        remove=row.locator('.cw-file-rule-remove')
+        assert remove.get_attribute('aria-label')=='Remove .json rule'
+        assert 'cw-close-icon' in remove.get_attribute('class').split()
+        assert remove.inner_text() == '✕'
+        def transparent_remove():
+            return remove.evaluate('''el=>getComputedStyle(el).backgroundColor==='rgba(0, 0, 0, 0)' ''')
+        assert transparent_remove(),suffix
+        remove.hover()
+        assert remove.evaluate('''el=>getComputedStyle(el).backgroundColor!=="rgba(0, 0, 0, 0)" '''),suffix
+        root=page.locator('[id$="-root"]')
+        root.evaluate('(el)=>{el.dataset.cwPalette="dark"}')
+        page.mouse.move(0, 0)
+        assert transparent_remove(),(suffix,'dark')
+        remove.hover()
+        assert remove.evaluate('''el=>getComputedStyle(el).backgroundColor!=="rgba(0, 0, 0, 0)" '''),(suffix,'dark hover')
+        root.evaluate('(el)=>{el.dataset.cwPalette="light"}')
         for field,value in [('parsedMin','0.02'),('parsedMax','0.05'),('metadataMin','0.10'),('metadataMax','0.20')]:
             row.locator(f'[data-field="{field}"]').fill(value)
         page.locator('[data-cw-mini="coefficients"]').click()
         page.locator('[data-cw-mini="attachment"]').click()
+        assert disclosure.evaluate('(el)=>el.open'),'disclosure state survived tab switch'
         assert row.locator('[data-field="parsedMin"]').input_value()=='0.02','draft survived tab switch'
         page.locator('.cw-save-attachments').click()
         def stored():

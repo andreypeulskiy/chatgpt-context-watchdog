@@ -115,8 +115,8 @@ import { clamp } from './12-panel-clamp.js';
       if (node.classList.contains('cw-mini-tab')) {
         const label = node.textContent.trim();
         if (label === 'Text estimation') hint = 'Estimate tokens in newly captured text and code.';
-        else if (label === 'Files & images') hint = 'Configure file fallback, image size and parsing limits.';
-        else if (label === 'Attachment weights') hint = 'Configure how files, images and pasted text affect forecasts.';
+        else if (label === 'Files & images') hint = 'Configure file contribution, fallback, image size and parsing limits.';
+        else if (label === 'Attachment weights') hint = 'Configure how images and pasted text affect forecasts.';
         else if (label === 'Appearance') hint = 'Change Watchdog style and theme immediately; preferences save automatically.';
         else if (label === 'Technical') hint = 'Edit hidden-context allowances, calibration strength and the global HANDOFF prompt.';
         else if (label === 'Diagnostics') hint = 'Audit, export and explicitly repair local Watchdog records.';
