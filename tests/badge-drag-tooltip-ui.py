@@ -2,6 +2,7 @@
 """Moving the badge must dismiss its tooltip at drag threshold and cancel pending hover."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -77,7 +78,7 @@ def run(browser, variant):
 
 
 with sync_playwright() as pw:
-    browser=pw.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+    browser=pw.chromium.launch(**chromium_launch_options(), headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
     for variant in ('Stable','Dev'):
         run(browser, variant)
     browser.close()

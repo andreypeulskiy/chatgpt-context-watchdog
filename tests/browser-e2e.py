@@ -6,6 +6,7 @@ localStorage bytes restored, since network origins are blocked in CI.
 """
 import json
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT = '11111111-1111-4111-8111-111111111111'
@@ -45,7 +46,7 @@ def snapshot(page):
     })''', KEY)
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser = playwright.chromium.launch(**chromium_launch_options(),headless=True,
         args=['--no-sandbox','--disable-dev-shm-usage'])
     page, errors = boot(browser, [])
     page.wait_for_function('''key => !!JSON.parse(localStorage.getItem(key)||'null')?.messages?.['msg:aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa']''', arg=KEY, timeout=8000)

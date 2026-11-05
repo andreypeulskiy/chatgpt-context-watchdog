@@ -7,6 +7,7 @@ import { loadSettings } from '../storage/03-settings-store.js';
 import { saveSettings } from '../storage/03-storage-io.js';
 import { requestPanelConfirmation } from './15-panel-dialog-lifecycle.js';
 import { render, showToast } from './16-panel-rendering.js';
+import { bindFileContributionEditor } from './15-file-contribution-editor.js';
 
   const SETTING_GROUPS = Object.freeze({
     text: {
@@ -25,6 +26,10 @@ import { render, showToast } from './16-panel-rendering.js';
     attachment: {
       label: 'Files & images',
       fields: [
+        ['fileOpt', 'fileOptimisticPct'],
+        ['filePess', 'filePessimisticPct'],
+        ['metadataFileOpt', 'metadataFileOptimisticPct'],
+        ['metadataFilePess', 'metadataFilePessimisticPct'],
         ['historicalFileFallback', 'historicalFileFallbackTokens'],
         ['imageAverage', 'averageImageTokens'],
         ['localFileLimit', 'localFileParsingLimitMiB'],
@@ -34,8 +39,6 @@ import { render, showToast } from './16-panel-rendering.js';
     coefficients: {
       label: 'Attachment estimation coefficients',
       fields: [
-        ['fileOpt', 'fileOptimisticPct'],
-        ['filePess', 'filePessimisticPct'],
         ['imageOpt', 'imageOptimisticPct'],
         ['imagePess', 'imagePessimisticPct'],
         ['pastedMinChars', 'pastedMinChars'],
@@ -63,7 +66,9 @@ import { render, showToast } from './16-panel-rendering.js';
 
   function validateSettingsGroup(group, updates) {
     if (group === 'attachment') {
-      return updates.metadataOnlyOptimisticBase <= updates.metadataOnlyPessimisticBase &&
+      return updates.fileOptimisticPct <= updates.filePessimisticPct &&
+        updates.metadataFileOptimisticPct <= updates.metadataFilePessimisticPct &&
+        updates.metadataOnlyOptimisticBase <= updates.metadataOnlyPessimisticBase &&
         updates.metadataOnlyOptimisticSizeFactor <= updates.metadataOnlyPessimisticSizeFactor &&
         updates.metadataOnlyOptimisticMax <= updates.metadataOnlyPessimisticMax;
     }
@@ -73,11 +78,12 @@ import { render, showToast } from './16-panel-rendering.js';
     }
     if (group === 'technical') return updates.hiddenOptimistic <= updates.hiddenPessimistic;
     if (group === 'coefficients') {
-      return updates.fileOptimisticPct <= updates.filePessimisticPct &&
-        updates.imageOptimisticPct <= updates.imagePessimisticPct;
+      return updates.imageOptimisticPct <= updates.imagePessimisticPct;
     }
     return true;
   }
+
+  let fileRulesEditor = null;
 
   // An edited value survives blur, a tab switch and an external storage event.
   function syncGroupInputs(group, force = false) {
@@ -89,7 +95,10 @@ import { render, showToast } from './16-panel-rendering.js';
       input.value = String(settings[key]);
       if (force) delete input.dataset.dirty;
     }
-    if (group === 'attachment' && ui.localFileLimit) updateLimitWarning();
+    if (group === 'attachment' && ui.localFileLimit) {
+      updateLimitWarning();
+      fileRulesEditor?.sync(force);
+    }
   }
   // Draft edits in lazy-mounted forms are never ledger changes. Leaving the
   // interface discards unsaved inputs and clears their dirty flags, while
@@ -116,6 +125,9 @@ import { render, showToast } from './16-panel-rendering.js';
 
   function bindSettingsGroup(group) {
     const definition = SETTING_GROUPS[group];
+    if (group === 'attachment') {
+      fileRulesEditor = bindFileContributionEditor(ui.attachmentSettings);
+    }
     const controls = definition.fields.map(([field]) => ui[field]);
     if (controls.some(node => !node)) throw new Error(`Missing ${group} setting input`);
     for (const [field, key] of definition.fields) {
@@ -155,6 +167,14 @@ import { render, showToast } from './16-panel-rendering.js';
         }
         updates[key] = normalized;
       }
+      if (group === 'attachment') {
+        const rules = fileRulesEditor?.read();
+        if (!rules) {
+          showToast('Files & images: invalid file extension or percentage range.');
+          return;
+        }
+        updates.fileContributionByExt = rules;
+      }
       if (!validateSettingsGroup(group, updates)) {
         showToast(`${definition.label}: values must be in the correct order.`);
         return;
@@ -174,6 +194,7 @@ import { render, showToast } from './16-panel-rendering.js';
     ui[definition.reset].addEventListener('click', () => {
       requestPanelConfirmation(`Restore defaults for ${definition.label}? Only this group will be reset.`, () => {
       const updates = Object.fromEntries(definition.fields.map(([,key]) => [key, DEFAULTS[key]]));
+      if (group === 'attachment') updates.fileContributionByExt = {};
       if (group === 'budget') {
         updates.budgetCalibrationBase = {
           conservativeBudget: DEFAULTS.conservativeBudget,

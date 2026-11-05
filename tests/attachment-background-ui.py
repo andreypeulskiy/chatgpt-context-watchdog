@@ -4,6 +4,7 @@ Hooks only in ephemeral injected bundle; no production test interface.
 """
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import VERSION
 from support.esbuild_hooks import instrument_bundle
 
@@ -24,7 +25,7 @@ HOOKS='''
     paused:()=>isWatchdogPaused()
   };'''
 with sync_playwright() as pw:
- browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+ browser=pw.chromium.launch(**chromium_launch_options(),headless=True,
    args=['--no-sandbox','--disable-dev-shm-usage'])
  for suffix in ('','.dev'):
   source=(ROOT/f'dist/chatgpt-context-watchdog-{VERSION}{suffix}.user.js').read_text()

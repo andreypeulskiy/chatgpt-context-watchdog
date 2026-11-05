@@ -7,6 +7,7 @@ This is not a claim of native Edge/Tampermonkey integration coverage.
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT = Path(__file__).resolve().parents[1]
 import re
@@ -105,7 +106,7 @@ def launch(browser, build, route, case, shape):
 
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,
         args=['--no-sandbox','--disable-dev-shm-usage'])
     for suffix in ('', '.dev'):
         build=ROOT / f'dist/chatgpt-context-watchdog-{VERSION}{suffix}.user.js'

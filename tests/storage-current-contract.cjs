@@ -14,6 +14,16 @@ function sourceFunction(fragment,name) {
   assert.ok(finish, name+' closes');
   return text.slice(start.index,finish.index+4);
 }
+function newCoreFunction(name) {
+  const text=source('file-contribution-rules');
+  const begin=new RegExp('^function '+name+'\\(','m').exec(text);
+  assert.ok(begin, name+' exists in file rules module');
+  const close=/\n}(?=\n)/g;
+  close.lastIndex=begin.index;
+  const end=close.exec(text);
+  assert.ok(end, name+' has a closing brace');
+  return text.slice(begin.index,end.index+2);
+}
 function fixture(overrides={}) {
   const store=new Map();
   const failures=[],timings=[],successes=[];
@@ -42,6 +52,14 @@ function fixture(overrides={}) {
   const handoffLimit=configuration.match(/^  const HANDOFF_MAX_CHARS = \d+;$/m)?.[0];
   assert.ok(handoffLimit,'HANDOFF limit comes from canonical runtime configuration');
   vm.runInContext(handoffLimit+'\n'+sourceFunction('01-runtime-configuration','isValidHandoffPrompt'),ctx);
+  const rulesSource=source('file-contribution-rules');
+  const constants=['EXTENSION_RE','PERCENT_FIELDS','MAX_EXTENSION_RULES'].map(name=>
+    rulesSource.split('\n').find(line=>line.startsWith('const '+name+' = '))).join('\n');
+  assert.ok(!constants.includes('undefined'));
+  vm.runInContext(constants+'\n'+
+    newCoreFunction('normalizedExtension')+'\n'+
+    newCoreFunction('validContributionPercent')+'\n'+
+    newCoreFunction('normalizeContributionRules'),ctx);
   vm.runInContext(numericRegistry+'\n'+sourceFunction('03-storage-io','writeJson')+'\n'+
     sourceFunction('03-storage-io','saveSettings')+'\n'+
     sourceFunction('03-settings-store','loadSettings'),ctx);

@@ -3,6 +3,7 @@
 from pathlib import Path
 import re
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = re.search(r'^// @version\s+(\S+)$', (ROOT/'src/userscript-header.txt').read_text(), re.M).group(1)
@@ -22,7 +23,7 @@ INIT='''() => {
 }'''
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for suffix in ('', '.dev'):
         for width in (390,1200):
             page=browser.new_page(viewport={'width':width,'height':820})

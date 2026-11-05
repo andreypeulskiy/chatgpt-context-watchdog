@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ UI-only regression in Chromium against a synthetic ChatGPT document."""
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT, BUNDLE_KIND
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -134,7 +135,7 @@ def check(browser,width):
     page.close()
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,
         args=['--no-sandbox','--disable-dev-shm-usage'])
     for width in (1200,390,320):
         # Stable intentionally has no Dev-only responsive panel-width rule at 320px.

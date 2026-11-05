@@ -2,12 +2,13 @@
 """Offline Chromium: pin outside-click behavior, modal interactions, two-line caption and header fit."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 P=Path(__file__).resolve().parents[1]
 from support.current import SCRIPT, VERSION
 UID='11111111-1111-4111-8111-111111111111'
 HTML=f'''<!doctype html><html><body><main><section data-chatgpt-search-unit-key="unit1:user" data-chatgpt-search-message-ids="{UID}"><div class="whitespace-pre-wrap">Test user message for pin UI.</div></section></main><button id="outside" type="button" style="position:fixed;left:0;top:0;width:7px;height:7px;padding:0;border:0;font-size:0">Host page</button><form><button type="button" data-testid="send-button">Send</button></form></body></html>'''
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for width,height in ((1200,900),(390,700),(320,650)):
         page=browser.new_page(viewport={'width':width,'height':height})
         page.set_default_timeout(7000)

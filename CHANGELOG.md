@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0
+
+- Add one file-contribution settings table with Parsed and Metadata-only
+  minimum/maximum percentages per extension and editable Other files defaults.
+- Preserve old file estimates until the user changes percentages; do not alter
+  file ledgers, file parsing, metadata heuristics, image handling or budgets.
+- Preserve existing tests and add dedicated Node and Chromium regression coverage.
+- Keep the 1.0.0 release manifest and original released artifacts unchanged.
+
 ## 1.0.0
 
 - Initial stable release.

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Test current bundle remount safety with in-memory test-only hooks."""
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 from support.esbuild_hooks import instrument_bundle
 
@@ -38,7 +39,7 @@ INJECTED = instrument_bundle(SCRIPT, """
   };""", route=f"{{pathname:'/c/{CHAT}',origin:'https://chatgpt.com',href:'https://chatgpt.com/c/{CHAT}'}}")
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser = playwright.chromium.launch(**chromium_launch_options(), headless=True, args=['--no-sandbox','--disable-dev-shm-usage'])
     for width in (1200,390,320):
         page=browser.new_page(viewport={'width':width, 'height':850})
         page.set_default_timeout(8000)

@@ -1,43 +1,43 @@
 {
-  "version": "1.0.0",
-  "status": "Build prepared locally; no release published",
+  "version": "1.1.0",
+  "status": "Automated QA passed locally; manual Tampermonkey testing pending; not published",
   "compiler": "esbuild 0.25.12",
-  "sourceSha256": "220739479b5f1e1385c296d1f6f846b235f0f536c439e0ea19b7208d126ba2bc",
-  "registeredTests": 113,
+  "sourceSha256": "3205fa173f28b266a7c5fd458ddd15bb161a8c7aaaf1d78654d1ceec6be3bec1",
+  "registeredTests": 115,
   "installers": [
     {
       "variant": "stable",
-      "file": "dist/chatgpt-context-watchdog-1.0.0.user.js",
-      "bytes": 384059,
-      "sha256": "48baff04bb7a5d227cd22671277a85f144d4e25f0cc582b3e59a35f6cd227496",
+      "file": "dist/chatgpt-context-watchdog-1.1.0.user.js",
+      "bytes": 394889,
+      "sha256": "6d36af12216a38f3d0bc8564d617768e3a659704f31b6347da04e1807e74300c",
       "compiler": "esbuild 0.25.12"
     },
     {
       "variant": "stable-minified",
-      "file": "dist/chatgpt-context-watchdog-1.0.0.min.user.js",
-      "bytes": 252838,
-      "sha256": "a578d576834b1fce8f6053bc9366fe11793f1668650c7a9c9b74b4491c319e7e",
+      "file": "dist/chatgpt-context-watchdog-1.1.0.min.user.js",
+      "bytes": 260106,
+      "sha256": "7d80a181225d8a9f9a8359d3ab837d883184365ed99cc7cd7224b04f7e987887",
       "compiler": "esbuild 0.25.12 (--minify)"
     },
     {
       "variant": "dev",
-      "file": "dist/chatgpt-context-watchdog-1.0.0.dev.user.js",
-      "bytes": 386348,
-      "sha256": "399d9de9f94ba974972bad428fde0a22cde281462efc92304d400c7aceeff2ce",
+      "file": "dist/chatgpt-context-watchdog-1.1.0.dev.user.js",
+      "bytes": 397178,
+      "sha256": "e28d3db3c434c2f65859c93a1a3b1667b875ce897e2b8cc220c7cbe24e2dc367",
       "compiler": "esbuild 0.25.12"
     }
   ],
   "verification": {
-    "nodeSuites": "55/55 PASS",
-    "browserSuites": "NOT RUN; Python Playwright and Chromium unavailable",
+    "nodeSuites": "56/56 PASS",
+    "browserSuites": "59/59 PASS (Windows Chrome)",
     "sourceSafety": "PASS",
-    "securityGate": "PASS for Stable, Dev and minified Stable",
+    "securityGate": "PASS",
     "architectureAndModuleContracts": "PASS",
     "typecheck": "PASS",
     "stableAndMinifiedReproducibility": "PASS",
     "eslint": "0 errors; 24 warnings",
-    "cssChecks": "PASS; 0 CSS quality errors or warnings",
-    "stylelint": "PASS; 0 errors and 0 warnings",
+    "cssChecks": "PASS; 0 errors or warnings",
+    "stylelint": "NOT RUN for 1.1.0",
     "manualTampermonkey": "NOT RUN"
   },
   "networkPolicy": "Local-only processing; one same-origin favicon HTTP-cache-only lookup; no network retry",

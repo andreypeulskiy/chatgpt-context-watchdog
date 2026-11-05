@@ -23,7 +23,7 @@ import { clamp } from './12-panel-clamp.js';
     metadataPessBase:metadata-pess-base metadataPessSize:metadata-pess-size metadataPessMax:metadata-pess-max
     metadataSpreadsheet:metadata-spreadsheet metadataTextCode:metadata-text-code metadataPdf:metadata-pdf
     metadataDocument:metadata-document metadataPresentation:metadata-presentation metadataArchive:metadata-archive metadataOther:metadata-other
-    advancedAttachments:advanced-attachments fileOpt:file-opt filePess:file-pess imageOpt:image-opt imagePess:image-pess
+    advancedAttachments:advanced-attachments fileOpt:file-opt filePess:file-pess metadataFileOpt:metadata-file-opt metadataFilePess:metadata-file-pess imageOpt:image-opt imagePess:image-pess
     pastedMinChars:pasted-min-chars pastedEnglishRatio:pasted-english-ratio pastedCyrillicRatio:pasted-cyrillic-ratio
     saveAttachmentCoefficients:save-attachment-coefficients resetAttachmentAdvanced:reset-attachment-advanced resetAttachments
     textSettingsDetails:text-settings-details proseCyrillicRatio:prose-cyrillic-ratio proseLatinRatio:prose-latin-ratio

@@ -10,6 +10,7 @@ Does not modify production sources, stored state, or decide missing-icon fallbac
 import sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT = Path(__file__).resolve().parents[1]
 SVG_NS = "http://www.w3.org/2000/svg"
@@ -260,7 +261,7 @@ def main():
     product = '--product' in sys.argv[1:]
     requests = []
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True, executable_path='/usr/bin/chromium', args=['--no-sandbox'])
+        browser = pw.chromium.launch(headless=True, **chromium_launch_options(), args=['--no-sandbox'])
         try:
             page = browser.new_page(viewport={'width': 390, 'height': 740})
             page.route('**/*', lambda route: (requests.append(route.request.url), route.abort()))

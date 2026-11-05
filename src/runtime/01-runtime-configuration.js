@@ -91,6 +91,9 @@ Use only the context available to you. Flag gaps and uncertainty, and omit repet
     // Single file contribution interval; no time-based file ageing.
     fileOptimisticPct: 25,
     filePessimisticPct: 75,
+    metadataFileOptimisticPct: 100,
+    metadataFilePessimisticPct: 100,
+    fileContributionByExt: {},
     imageOptimisticPct: 20,
     imagePessimisticPct: 80,
     pastedMinChars: 10000,

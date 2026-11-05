@@ -299,6 +299,10 @@
       {
         "file": "handoff-logo-ui.py",
         "lane": "functional"
+      },
+      {
+        "file": "file-contribution-rules-ui.py",
+        "lane": "functional"
       }
     ]
   },
@@ -418,6 +422,10 @@
       },
       {
         "file": "numeric-settings-esm.cjs",
+        "lane": "functional"
+      },
+      {
+        "file": "file-contribution-rules-esm.cjs",
         "lane": "functional"
       }
     ],

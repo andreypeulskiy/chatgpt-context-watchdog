@@ -14,8 +14,10 @@ const NUMERIC_SETTING_SPECS = Object.freeze({
   averageImageTokens: { min: 100, max: 1e6, integer: true },
   historicalFileFallbackTokens: { min: 0, max: 1e7, integer: true },
   localFileParsingLimitMiB: { min: 0, max: MAX_LOCAL_FILE_MIB, integer: true },
-  fileOptimisticPct: { min: 0, max: 100, integer: true },
-  filePessimisticPct: { min: 0, max: 100, integer: true },
+  fileOptimisticPct: { min: 0, max: 100, integer: false },
+  filePessimisticPct: { min: 0, max: 100, integer: false },
+  metadataFileOptimisticPct: { min: 0, max: 100, integer: false },
+  metadataFilePessimisticPct: { min: 0, max: 100, integer: false },
   imageOptimisticPct: { min: 0, max: 100, integer: true },
   imagePessimisticPct: { min: 0, max: 100, integer: true },
   pastedMinChars: { min: 0, max: 1e7, integer: true },
@@ -35,6 +37,8 @@ const NUMERIC_SETTING_SPECS = Object.freeze({
 
 function numericStep(key) {
   const spec = NUMERIC_SETTING_SPECS[key];
+  if (['fileOptimisticPct', 'filePessimisticPct',
+       'metadataFileOptimisticPct', 'metadataFilePessimisticPct'].includes(key)) return 0.01;
   const fallback = DEFAULTS[key];
   if (!spec || !Number.isFinite(fallback)) throw new Error('Unknown numeric setting: ' + key);
   const magnitude = fallback === 0 ? 0 : 10 ** (Math.floor(Math.log10(Math.abs(fallback))) - 2);

@@ -20,6 +20,18 @@ The userscript is authored as ES modules under `src/` and bundled into a self-co
 - Message and route identity checks prevent stale or outgoing DOM from being treated as the active conversation.
 - Audit is read-only. Repair and Undo require explicit user action.
 
+## File contribution rules (b23 candidate)
+
+`src/core/file-contribution-rules.js` validates local percentage rules by normalized
+extension; the existing `settings:v1` entry stores them under `fileContributionByExt`.
+The file ledger schema is unchanged. `fileForecast()` applies the selected parsed
+percentage to previously captured token estimates, or the metadata percentage
+to the existing `metadataFileContextEstimate()` result. The 100–100 metadata
+default is exactly the former metadata accounting. Unknown-size historical fallback
+and auto-paste continue to use their original logic; only their metadata estimate
+can be scaled by an explicit extension override. Settings are validated at load
+and at Save, and uncommitted UI drafts are never written to the ledger.
+
 ## Network and rendering constraints
 
 The userscript has no remote script dependencies and does not transmit conversation data. The only reviewed request is the optional same-origin favicon lookup with `cache: "only-if-cached"`; a cache miss does not trigger a network retry and a controlling Service Worker blocks the lookup. SVG input is parsed and copied through an explicit whitelist before rendering.

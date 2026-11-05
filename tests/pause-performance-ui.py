@@ -6,6 +6,7 @@ hard CPU guarantee on Edge. There is no production telemetry or polling.
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,7 +43,7 @@ INIT = f'''() => {{
 }}'''
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,
         args=['--no-sandbox','--disable-dev-shm-usage'])
     for suffix in ('', '.dev'):
         script=(ROOT/f'dist/chatgpt-context-watchdog-{VERSION}{suffix}.user.js').read_text()

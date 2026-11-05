@@ -2,6 +2,7 @@
 """Shared Stable/Dev attachment editor: disclosures, one Save/Restore, storage, zero MiB."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 ROOT=Path(__file__).resolve().parents[1]
 VERSION=__import__('re').search(r'^// @version\s+(\S+)$', (ROOT/'src/userscript-header.txt').read_text(), __import__('re').M).group(1)
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -10,7 +11,7 @@ HTML='''<!doctype html><html><body><main>
 <button type="button" data-testid="send-button">Send</button></form>
 </main></body></html>'''
 with sync_playwright() as p:
-  browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+  browser=p.chromium.launch(**chromium_launch_options(),headless=True,
       args=['--no-sandbox','--disable-dev-shm-usage'])
   for suffix in ('','.dev'):
     page=browser.new_page(viewport={'width':900,'height':780})
@@ -88,12 +89,15 @@ with sync_playwright() as p:
             saved['historicalFileFallbackTokens'],saved['metadataOnlyTypeFactorPdf'])==(0,2100,1250,1.5),(suffix,saved)
     # The single confirmation must restore all 16 attachment fields, not coefficients.
     page.locator('[data-cw-mini="coefficients"]').click()
+    page.locator('.cw-image-opt').fill('40')
+    page.locator('.cw-image-pess').fill('90')
+    page.locator('.cw-save-attachment-coefficients').click()
+    page.locator('[data-cw-mini="attachment"]').click()
     assert page.locator('.cw-file-opt').input_value()=='25'
     assert page.locator('.cw-file-pess').input_value()=='75'
     page.locator('.cw-file-opt').fill('40')
     page.locator('.cw-file-pess').fill('90')
-    page.locator('.cw-save-attachment-coefficients').click()
-    page.locator('[data-cw-mini="attachment"]').click()
+    page.locator('.cw-save-attachments').click()
     assert not basic.evaluate('(el)=>el.open'), 'disclosure state must survive mini-tab switch'
     assert metadata.evaluate('(el)=>el.open'), 'metadata disclosure state must survive mini-tab switch'
     page.locator('.cw-reset-attachments').click()
@@ -104,7 +108,8 @@ with sync_playwright() as p:
     restored=page.evaluate("""()=>JSON.parse(window.__store.get('cgpt-context-watchdog:settings:v1'))""")
     assert (restored['localFileParsingLimitMiB'],restored['averageImageTokens'],
             restored['historicalFileFallbackTokens'],restored['metadataOnlyTypeFactorPdf'])==(75,2000,1000,1.0),(suffix,restored)
-    assert (restored['fileOptimisticPct'],restored['filePessimisticPct'])==(40,90),(suffix,restored)
+    assert (restored['fileOptimisticPct'],restored['filePessimisticPct'])==(25,75),(suffix,restored)
+    assert (restored['imageOptimisticPct'],restored['imagePessimisticPct'])==(40,90),(suffix,restored)
     assert not page.locator('.cw-local-limit-label .cw-limit-warning').is_visible(),suffix
     # Invalid metadata calibration must not partially save basic settings.
     page.locator('.cw-metadata-opt-base').fill('3000')

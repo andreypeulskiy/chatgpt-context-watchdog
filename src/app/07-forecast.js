@@ -2,6 +2,7 @@ import { calculateContextEstimate } from '../core/context-estimate.js';
 import { settings } from '../runtime/01-runtime-capture-state.js';
 import { isAutoPasteName, metadataFileContextEstimate } from '../attachments/05-attachment-helpers.js';
 import { effectiveImageStats } from '../chatgpt/09-dom-image-accounting.js';
+import { contributionForFile } from '../core/file-contribution-rules.js';
 
   function autoPasteMinimumEstimate(file) {
     // Visible automatic pasted-text document without readable content.
@@ -75,8 +76,9 @@ import { effectiveImageStats } from '../chatgpt/09-dom-image-accounting.js';
         knownTokens += t;
         parsedFiles++;
 
-        optimistic += t * (settings.fileOptimisticPct / 100);
-        pessimistic += t * (settings.filePessimisticPct / 100);
+        const [low, high] = contributionForFile(file, settings, 'parsed');
+        optimistic += t * low / 100;
+        pessimistic += t * high / 100;
         continue;
       }
 
@@ -104,8 +106,9 @@ import { effectiveImageStats } from '../chatgpt/09-dom-image-accounting.js';
       }
       // A lower-bound text estimate replaces, never adds to, a metadata
       // estimate for this same file. A known file size may imply a higher cap.
-      optimistic += Math.max(meta.optimistic, pasteMinimum?.optimistic || 0);
-      pessimistic += Math.max(meta.pessimistic, pasteMinimum?.pessimistic || 0);
+      const [low, high] = contributionForFile(file, settings, 'metadata');
+      optimistic += Math.max(meta.optimistic * low / 100, pasteMinimum?.optimistic || 0);
+      pessimistic += Math.max(meta.pessimistic * high / 100, pasteMinimum?.pessimistic || 0);
     }
 
     return {

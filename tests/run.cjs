@@ -25,7 +25,7 @@ if (!['all', ...CATEGORIES, ...LANES].includes(selector)) {
 const esmVmSuites = new Set([
   'attachment-pause-submission-esm.cjs', 'regression-esm.cjs', 'storage-esm-regression.cjs',
   'attachment-metadata-esm.cjs', 'settings-esm.cjs', 'ui-action-styles-esm.cjs',
-  'thinking-route-regression.cjs', 'numeric-settings-esm.cjs', 'image-identity-esm.cjs', 'image-cache-invalidation-esm.cjs', 'ledger-audit-esm.cjs'
+  'thinking-route-regression.cjs', 'numeric-settings-esm.cjs', 'image-identity-esm.cjs', 'image-cache-invalidation-esm.cjs', 'ledger-audit-esm.cjs', 'file-contribution-rules-esm.cjs'
 ]);
 const entries = select(selector).filter(item => item.kind === 'node');
 const results = [];

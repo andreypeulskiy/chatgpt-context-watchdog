@@ -2,6 +2,7 @@
 """About/Help semantics, copy accuracy, native keyboard control and viewport fit."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import VERSION
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -81,7 +82,7 @@ def check(browser, suffix, width, height):
     page.close()
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for suffix in ('','.dev'):
         for width,height in ((320,480),(390,620),(1200,900)):
             check(browser,suffix,width,height)

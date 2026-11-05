@@ -11,14 +11,13 @@ Both modes use synthetic shapes; no ChatGPT/OpenAI logo data is bundled.
 """
 import collections
 import sys
-import os
-import shutil
 import contextlib
 import http.server
 import threading
 from pathlib import Path
 from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 SVG_NS = 'http://www.w3.org/2000/svg'
 SYNTHETIC_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
@@ -193,15 +192,8 @@ def check_svg_guards(page):
 
 
 def launch_browser(pw):
-    """Use locally installed Chromium, or WATCHDOG_BROWSER_CHANNEL=msedge."""
-    options = {'headless': True}
-    channel = os.environ.get('WATCHDOG_BROWSER_CHANNEL')
-    if channel:
-        options['channel'] = channel
-    else:
-        executable = os.environ.get('WATCHDOG_BROWSER_EXE') or shutil.which('chromium') or shutil.which('chromium-browser')
-        if executable:
-            options['executable_path'] = executable
+    """Launch the browser selected by the shared OS-aware test helper."""
+    options = {'headless': True, **chromium_launch_options()}
     if sys.platform.startswith('linux'):
         options['args'] = ['--no-sandbox']
     return pw.chromium.launch(**options)

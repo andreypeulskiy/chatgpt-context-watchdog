@@ -21,7 +21,7 @@ try {
   fs.mkdirSync(path.join(tmp,'tools'),{recursive:true});
   fs.copyFileSync(path.join(root,'tools/build.cjs'),path.join(tmp,'tools/build.cjs'));
   fs.copyFileSync(path.join(root,'tools/cache-only-policy.cjs'),path.join(tmp,'tools/cache-only-policy.cjs'));
-  fs.symlinkSync(localDependencies,path.join(tmp,'node_modules'),'dir');
+  fs.symlinkSync(localDependencies,path.join(tmp,'node_modules'),process.platform === 'win32' ? 'junction' : 'dir');
   const run=spawnSync(process.execPath,[path.join(tmp,'tools/build.cjs')],
     {cwd:tmp,encoding:'utf8',timeout:25000});
   assert.equal(run.status,0,run.stderr||run.stdout||String(run.error));

@@ -6,6 +6,7 @@ visible branch composer). They are *not* a claim about all future ChatGPT DOMs.
 """
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -211,7 +212,7 @@ def run_case(browser, build, width):
     print(f'PASS {build.name} {width}px: paused remount + external preference sync',flush=True)
 
 with sync_playwright() as playwright:
-    browser=playwright.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser=playwright.chromium.launch(**chromium_launch_options(),headless=True,
         args=['--no-sandbox','--disable-dev-shm-usage'])
     for build in FILES:
         for width in (320,390,1200):

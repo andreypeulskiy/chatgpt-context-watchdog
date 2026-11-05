@@ -3,6 +3,7 @@
 from pathlib import Path
 import re
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT=Path(__file__).resolve().parents[1]
 from support.current import VERSION
@@ -157,7 +158,7 @@ def run(browser,mode,file,width):
  page.close()
 
 with sync_playwright() as p:
- browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+ browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  for mode,file in [('Stable',SCRIPT_FILES[0]),('Dev',SCRIPT_FILES[1])]:
   for width in (390,1200):run(browser,mode,file,width)
  browser.close()

@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 ROOT=Path(__file__).resolve().parents[1]
 from support.current import VERSION
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -12,7 +13,7 @@ DEV=ROOT/f'dist/chatgpt-context-watchdog-{VERSION}.dev.user.js'
 assert BASE.is_file() and DEV.is_file()
 
 with sync_playwright() as p:
- browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+ browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  stable_panel_widths={}
  for mode,file in (('Stable',BASE),('Dev',DEV)):
   content=file.read_text()

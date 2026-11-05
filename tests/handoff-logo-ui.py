@@ -3,6 +3,7 @@
 from pathlib import Path
 import importlib.util
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('logo_harness',ROOT/'tests/logo-tooltip-ui.py')
 h=importlib.util.module_from_spec(spec);spec.loader.exec_module(h)
@@ -100,7 +101,7 @@ def test_handoff(browser,suffix,width):
  p.close()
 
 with sync_playwright() as pw:
- browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+ browser=pw.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  try:
   for suffix in ('','.dev'):
    for palette in ('light','dark'):

@@ -2,13 +2,14 @@
 """End-to-end Record Chat Limit workflow: cancel/confirm/history/SPA/geometry."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 P=Path(__file__).resolve().parents[1]
 from support.current import SCRIPT, VERSION
 UUID='11111111-1111-4111-8111-111111111111'
 OTHER='22222222-2222-4222-8222-222222222222'
 HTML=f'''<html><body><main><section data-chatgpt-search-unit-key="unit1:user" data-chatgpt-search-message-ids="{UUID}"><div class="whitespace-pre-wrap">Hello Watchdog test for calibration sample.</div></section></main><form data-chatgpt-composer><button type="button" data-testid="send-button">Send</button></form></body></html>'''
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for width,height in ((1200,1000),(450,560)):
         page=browser.new_page(viewport={'width':width,'height':height})
         page.set_default_timeout(5000)

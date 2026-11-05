@@ -3,6 +3,7 @@
 from pathlib import Path
 import re
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT=Path(__file__).resolve().parents[1]
 VERSION=re.search(r'^// @version\s+(\S+)$',(ROOT/'src/userscript-header.txt').read_text(),re.M).group(1)
@@ -23,7 +24,7 @@ def assert_focused(page, selector):
     assert page.locator(selector).evaluate('(e)=>document.activeElement===e'), selector
 
 with sync_playwright() as pw:
-    browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser=pw.chromium.launch(**chromium_launch_options(),headless=True,
                               args=['--no-sandbox','--disable-dev-shm-usage'])
     for kind in ('stable','dev'):
       for width in (320,390,1200):

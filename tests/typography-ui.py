@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Verify readable navigation and numeric inputs without pinning font tokens."""
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -47,7 +48,7 @@ def check_field(page, selector):
     assert field['usableWidth']>=field['requiredWidth'], field
 
 with sync_playwright() as p:
- browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+ browser=p.chromium.launch(**chromium_launch_options(),headless=True,
     args=['--no-sandbox','--disable-dev-shm-usage'])
  for width in (320,350,390,1200):
   page=browser.new_page(viewport={'width':width,'height':850})

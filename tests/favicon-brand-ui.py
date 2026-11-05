@@ -4,6 +4,7 @@ import importlib.util
 import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('prior_logo_qa', ROOT / 'tests' / 'logo-tooltip-ui.py')
@@ -113,7 +114,7 @@ def check_watchdog_art(browser, suffix):
 
 if __name__ == '__main__':
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(executable_path='/usr/bin/chromium', headless=True, args=['--no-sandbox','--disable-dev-shm-usage'])
+        browser = pw.chromium.launch(**chromium_launch_options(), headless=True, args=['--no-sandbox','--disable-dev-shm-usage'])
         try:
             for suffix in ('', '.dev'):
                 check_official(browser, suffix)

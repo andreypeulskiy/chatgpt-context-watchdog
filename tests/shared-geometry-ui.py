@@ -2,6 +2,7 @@
 """ Soft/Sharp change corner shape, never layout or hit-zone geometry."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT = Path(__file__).resolve().parents[1]
 from support.current import VERSION
@@ -27,7 +28,7 @@ COMPARE = '''() => {
 }'''
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', headless=True,
+    browser = playwright.chromium.launch(**chromium_launch_options(), headless=True,
         args=['--no-sandbox', '--disable-dev-shm-usage'])
     for variant, widths in (('Stable', (1200,)), ('Dev', (320, 1200))):
         filename = f'chatgpt-context-watchdog-{VERSION}' + ('.dev' if variant == 'Dev' else '') + '.user.js'

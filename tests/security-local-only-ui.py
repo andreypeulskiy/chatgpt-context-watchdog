@@ -7,6 +7,7 @@ Watchdog code. It does not attempt to classify ChatGPT's own network traffic.
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT = Path(__file__).resolve().parents[1]
 from support.current import SCRIPT
@@ -41,7 +42,7 @@ MOCK_STORAGE = '''() => {
 }'''
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(executable_path='/usr/bin/chromium', headless=True,
+    browser = p.chromium.launch(**chromium_launch_options(), headless=True,
         args=['--no-sandbox', '--disable-dev-shm-usage'])
     page = browser.new_page(viewport={'width': 1200, 'height': 850})
     errors = []

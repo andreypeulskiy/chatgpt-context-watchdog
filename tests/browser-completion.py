@@ -6,6 +6,7 @@ classic 1.x projection or a test-only module registry.
 """
 import json
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT = '22222222-2222-4222-8222-222222222222'
@@ -31,7 +32,7 @@ INIT = '''() => {
     }});
 }'''
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', headless=True,
+    browser = playwright.chromium.launch(**chromium_launch_options(), headless=True,
         args=['--no-sandbox', '--disable-dev-shm-usage'])
     page = browser.new_page(viewport={'width':990,'height':800})
     page.set_default_timeout(8000)

@@ -18,6 +18,17 @@ import { APP, HANDOFF_MAX_CHARS } from '../runtime/01-runtime-configuration.js';
               </div>
             </div>`,
     attachment: `<div class="cw-config-form">
+              <div class="cw-advanced-caption">File context contribution (%)</div>
+              <div class="cw-advanced-hint">Percent of parsed tokens or the metadata-only estimate. Unlisted extensions use Other files. Values apply to existing file records.</div>
+              <div class="cw-file-rule-head" aria-hidden="true"><span>Type</span><span>Parsed min–max</span><span>Metadata min–max</span><span></span></div>
+              <div class="cw-file-rule-row cw-file-rule-default">
+                <span class="cw-file-rule-name">Other files</span>
+                <div class="cw-file-rule-pair"><input class="cw-file-opt" type="number" aria-label="Other files parsed minimum percent"><span aria-hidden="true">–</span><input class="cw-file-pess" type="number" aria-label="Other files parsed maximum percent"></div>
+                <div class="cw-file-rule-pair"><input class="cw-metadata-file-opt" type="number" aria-label="Other files metadata minimum percent"><span aria-hidden="true">–</span><input class="cw-metadata-file-pess" type="number" aria-label="Other files metadata maximum percent"></div>
+                <span></span>
+              </div>
+              <div class="cw-file-rule-rows"></div>
+              <div class="cw-file-rule-add-line"><label>Extension <input class="cw-file-rule-extension" maxlength="17" placeholder="json" autocomplete="off" spellcheck="false"></label><button type="button" class="cw-file-rule-add">Add</button></div>
               <details class="cw-disclosure cw-attachment-core" open><summary>Main file &amp; image settings</summary>
               <label><span class="cw-field-caption" title="Assumed token cost for one image, not its byte size">Image estimate (tokens)</span> <input class="cw-image-average" type="number"></label>
               <label class="cw-local-limit-label"><span class="cw-field-caption" title="Maximum file size for local parsing. Larger files use metadata only. Recommended: 75 MiB.">Local file parsing limit (MiB)</span>
@@ -33,9 +44,6 @@ import { APP, HANDOFF_MAX_CHARS } from '../runtime/01-runtime-configuration.js';
             </div>`,
     coefficients: `<div class="cw-config-form">
 
-                <div class="cw-advanced-caption">File context contribution (%)</div>
-                <label><span class="cw-field-caption" title="Estimated share of locally parsed file content included in the optimistic scenario; also used for historical fallback and auto-paste minimum">Files · Optimistic (%)</span> <input class="cw-file-opt" type="number"></label>
-                <label><span class="cw-field-caption" title="Estimated share of locally parsed file content included in the pessimistic scenario; also used for historical fallback and auto-paste minimum">Files · Pessimistic (%)</span> <input class="cw-file-pess" type="number"></label>
                 <div class="cw-advanced-caption">Image context contribution (%)</div>
                 <label><span class="cw-field-caption" title="Share of image estimate counted in optimistic scenario">Images · Optimistic (%)</span> <input class="cw-image-opt" type="number"></label>
                 <label><span class="cw-field-caption" title="Share of image estimate counted in pessimistic scenario">Images · Pessimistic (%)</span> <input class="cw-image-pess" type="number"></label>

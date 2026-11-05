@@ -2,6 +2,7 @@
 """Budget legends remain present, ordered, readable and non-overlapping."""
 import json
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -49,6 +50,6 @@ def check(browser,width):
  page.close()
 
 with sync_playwright() as p:
- browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+ browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  for w in (320,390,1200):check(browser,w)
  browser.close()

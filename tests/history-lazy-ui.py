@@ -2,6 +2,7 @@
 """Stable/Dev: History is loaded once on demand, without ledger work on tab flips."""
 import json
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -61,7 +62,7 @@ def run(browser,width):
     page.close()
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,
                               args=['--no-sandbox','--disable-dev-shm-usage'])
     for width in [390,1200]:run(browser,width)
     browser.close()

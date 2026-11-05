@@ -10,10 +10,10 @@ const {isolatedModules,silentPanelRendering}=require('./support/isolated-esm.cjs
  const {LAZY_ESTIMATION_MARKUP,LAZY_VIEW_MARKUP}=realm.module('ui/13-panel-markup.js');
  let checks=0;
  function check(name,fn){fn();checks++;console.log('PASS '+name);}
- check('37 editable controls use the same numeric domain as storage',()=>{
+ check('39 editable controls use the same numeric domain as storage',()=>{
    const keys=Object.values(SETTING_GROUPS).flatMap(g=>g.fields.map(([,key])=>key));
-   assert.equal(keys.length,37);
-   assert.equal(new Set(keys).size,37);
+   assert.equal(keys.length,39);
+   assert.equal(new Set(keys).size,39);
    for(const key of keys){
      const spec=NUMERIC_SETTING_SPECS[key];
      assert.ok(spec,'missing '+key);
@@ -24,7 +24,7 @@ const {isolatedModules,silentPanelRendering}=require('./support/isolated-esm.cjs
  check('steps depend exclusively on source DEFAULTS and numeric kind',()=>{
    for(const [key,expected] of [
      ['proseCyrillicCharsPerToken',.01],['metadataOnlyTypeFactorPdf',.01],
-     ['fileOptimisticPct',1],['localFileParsingLimitMiB',1],
+     ['fileOptimisticPct',.01],['metadataFilePessimisticPct',.01],['localFileParsingLimitMiB',1],
      ['metadataOnlyOptimisticBase',1],['metadataOnlyOptimisticSizeFactor',10],
      ['averageImageTokens',10],['metadataOnlyOptimisticMax',100],
      ['conservativeBudget',100],['normalBudget',1000],

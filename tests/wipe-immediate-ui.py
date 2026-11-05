@@ -2,6 +2,7 @@
 """Wipe removes durable & RAM data, then immediately saves only fresh defaults+badge."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import VERSION
 from support.esbuild_hooks import instrument_bundle
 import json
@@ -245,7 +246,7 @@ def failure_paths(browser):
     page.close()
 
 with sync_playwright() as pw:
- browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+ browser=pw.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  for variant in ('Stable','Dev'):
   for width,height in ((320,800),(390,800),(1200,900)):
    for drag in (False,True):run(browser,variant,width,height,drag)

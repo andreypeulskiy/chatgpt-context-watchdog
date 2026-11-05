@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from urllib.parse import quote
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
+from support.esbuild_hooks import instrument_bundle
 from support.current import VERSION
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -37,22 +39,20 @@ INIT='''() => {
 }'''
 HOOKS='''
   window.__imageCacheQA={
-    scan:()=>loadModule('src/app/11-message-scan.js').scanMessages({backfill:true,reason:'image QA'}),
+    scan:()=>scanMessages({backfill:true,reason:'image QA'}),
     status:()=>({queries:window.__imgQueries,
       ledger:JSON.parse(localStorage.getItem('cgpt-context-watchdog:state:v2:chat%3A11111111-1111-4111-8111-111111111111')||'null')})
   };
 '''
 
 def inject(source):
-    marker="  loadModule('src/main.js');"
-    assert source.count(marker)==1, 'QA hook requires the isolated-module build'
-    script=source.replace(marker,HOOKS+marker,1)
-    opening='\n(() => {\n'
-    assert script.count(opening)==1
-    return script.replace(opening,opening+f"const location = {{pathname:'/c/{CHAT}',origin:'https://chatgpt.com',href:'https://chatgpt.com/c/{CHAT}'}};\n",1)
+    # Support both the canonical esbuild IIFE and the offline module loader.
+    # Only this synthetic page receives the QA hook; production bytes stay intact.
+    route=f"{{pathname:'/c/{CHAT}',origin:'https://chatgpt.com',href:'https://chatgpt.com/c/{CHAT}'}}"
+    return instrument_bundle(source,HOOKS,route=route)
 
 with sync_playwright() as pw:
-    browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=pw.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for suffix,label in [('', 'Stable'),('.dev','Dev')]:
         source=(ROOT/f'dist/chatgpt-context-watchdog-{VERSION}{suffix}.user.js').read_text()
         page=browser.new_page(viewport={'width':990,'height':800})

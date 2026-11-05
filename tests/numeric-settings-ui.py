@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 R=Path(__file__).resolve().parents[1]
 import re
 VERSION=re.search(r'^// @version\s+(\S+)$',(R/'src/userscript-header.txt').read_text(),re.M).group(1)
 CHAT='11111111-1111-4111-8111-111111111111'
 HTML='''<!doctype html><html><body><main><form data-chatgpt-composer><textarea id="prompt-textarea"></textarea><button type="button" data-testid="send-button">Send</button></form></main></body></html>'''
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for suffix in ('','.dev'):
         page=browser.new_page(viewport={'width':900,'height':780})
         errors=[]

@@ -9,6 +9,7 @@ src/ or shipped dist/; any unknown envelope fails closed.
 # Only symbols already exported by application modules may be exposed to an
 # ephemeral, synthetic QA document. These globals never enter product bytes.
 _MODULE_SYMBOLS = {
+    'src/app/11-message-scan.js': ('scanMessages',),
     'src/ui/15-panel-ui-coordinator.js': ('ensureUI',),
     'src/ui/15-panel-dialog-lifecycle.js': ('settlePanelConfirmation',),
     'src/runtime/01-runtime-ui-state.js': ('ui', 'pendingLocalFiles'),

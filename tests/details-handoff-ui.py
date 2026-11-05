@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ installed offline userscript: Details metrics and global HANDOFF draft lifecycle."""
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -29,7 +30,7 @@ INJECTED=SCRIPT.replace('(() => {',
 PREFIX='cgpt-context-watchdog:settings:v1'
 
 with sync_playwright() as p:
-  browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+  browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
   for width in (320,390,1200):
     page=browser.new_page(viewport={'width':width,'height':850})
     page.set_default_timeout(8000)

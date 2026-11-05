@@ -1,6 +1,7 @@
 import { DEFAULTS, METADATA_SETTING_SPECS, SETTINGS_KEY, isValidHandoffPrompt } from '../runtime/01-runtime-configuration.js';
 import { measuredStorageRead } from '../runtime/02-profiling.js';
 import { NUMERIC_SETTING_SPECS } from '../runtime/01-numeric-settings.js';
+import { normalizeContributionRules } from '../core/file-contribution-rules.js';
 
   // Mathematical settings are loaded through a validated current-version path.
   function loadSettings() {
@@ -80,8 +81,15 @@ import { NUMERIC_SETTING_SPECS } from '../runtime/01-numeric-settings.js';
       }
       for (const key of [
         'fileOptimisticPct', 'filePessimisticPct',
+        'metadataFileOptimisticPct', 'metadataFilePessimisticPct',
         'imageOptimisticPct', 'imagePessimisticPct'
       ]) result[key] = number(key);
+
+      result.fileContributionByExt = normalizeContributionRules(parsed.fileContributionByExt);
+      if (result.metadataFileOptimisticPct > result.metadataFilePessimisticPct) {
+        result.metadataFileOptimisticPct = DEFAULTS.metadataFileOptimisticPct;
+        result.metadataFilePessimisticPct = DEFAULTS.metadataFilePessimisticPct;
+      }
 
       // Reject inconsistent pairs rather than allowing inverted forecasts.
       if (!(result.conservativeBudget <= result.normalBudget &&

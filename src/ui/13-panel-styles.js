@@ -163,6 +163,28 @@ import { APP } from '../runtime/01-runtime-configuration.js';
       .cw-context-note { margin: 5px 0 8px; font-size: 11px; line-height: 1.45; }
       .cw-settings-actions { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 5px; }
       .cw-config-form { margin-top: 7px; }
+      /* The four file percentages live in one compact, scroll-free table. */
+      .cw-file-rule-head, .cw-file-rule-row {
+        display: grid; grid-template-columns: 62px minmax(0,1fr) minmax(0,1fr) 18px;
+        gap: 4px; align-items: center;
+      }
+      .cw-file-rule-head { font-size: 9px; color: var(--cw-muted); margin: 8px 0 3px; }
+      .cw-file-rule-row { padding: 4px 0; border-bottom: 1px solid rgba(100,116,139,.12); }
+      .cw-file-rule-name { min-width: 0; overflow-wrap: anywhere; font-size: 10px; }
+      .cw-file-rule-pair { min-width: 0; display: grid; align-items: center; grid-template-columns: minmax(0,1fr) 7px minmax(0,1fr); gap: 1px; }
+      #${APP}-root .cw-file-rule-pair input[type="number"] {
+        display: block; width: 100%; min-width: 0; padding: 4px 1px;
+        font-size: 10px; text-align: center; appearance: textfield; -moz-appearance: textfield;
+      }
+      #${APP}-root .cw-file-rule-pair input::-webkit-inner-spin-button,
+      #${APP}-root .cw-file-rule-pair input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+      .cw-file-rule-pair > span { font-size: 9px; text-align: center; }
+      #${APP}-root .cw-file-rule-remove { border: 0; padding: 0; font-size: 15px; line-height: 1; }
+      .cw-file-rule-add-line { display: flex; align-items: end; gap: 8px; margin: 7px 0 10px; }
+      .cw-file-rule-add-line > label { flex: 1; min-width: 0; }
+      #${APP}-root .cw-file-rule-add-line input { width: 100%; }
+      #${APP}-root .cw-file-rule-add-line button { flex: 0 0 auto; }
+
       .cw-config-form label, .cw-settings label {
         display: grid; grid-template-columns: minmax(0, 1fr) 113px;
         gap: 9px; align-items: center; margin-top: 6px;

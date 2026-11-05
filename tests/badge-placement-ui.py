@@ -6,6 +6,7 @@ vertical scroll fallback when none of the three directions fit.
 """
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 
 ROOT=Path(__file__).resolve().parents[1]
 from support.current import VERSION
@@ -87,7 +88,7 @@ def run(browser,variant,width,height,where):
     page.close()
 
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=p.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
     for variant in ('Stable','Dev'):
         for width,height,where in ((1200,900,'default'),(390,900,'default'),
              (1200,900,'left-top'),(1200,900,'right-top'),

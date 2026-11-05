@@ -3,6 +3,7 @@
 import json
 import re
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -103,7 +104,7 @@ def check(browser,width,tokens):
  page.close()
 
 with sync_playwright() as p:
- browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+ browser=p.chromium.launch(**chromium_launch_options(),headless=True,
   args=['--no-sandbox','--disable-dev-shm-usage'])
  for width,tokens in ((320,110000),(390,110000),(1200,110000),(390,1)):
   check(browser,width,tokens)

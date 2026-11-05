@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT Context Watchdog (Local)
 // @namespace    local.chatgpt.context.watchdog
-// @version      1.0.0
+// @version      1.1.0
 // @author       f0rset1
 // @description  Local-only context size watchdog for ChatGPT. One guarded, same-origin cache-only favicon lookup; no chat-data network traffic.
 // @match        https://chatgpt.com/*

@@ -2,6 +2,7 @@
 """Real pointer/keyboard hit regions of badge with SVG or Watchdog fallback."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 ROOT=Path(__file__).resolve().parents[1]
 from support.current import VERSION
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -103,7 +104,7 @@ def run(browser,variant,palette,shape):
  p.close()
 
 with sync_playwright() as q:
- browser=q.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
+ browser=q.chromium.launch(**chromium_launch_options(),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  for v in ('Stable','Dev'):
   for pal in ('light','dark'):
    for style in ('soft','sharp'):

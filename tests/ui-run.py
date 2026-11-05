@@ -12,6 +12,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
+from support.browser_launch import chromium_launch_options
 
 root = Path(__file__).resolve().parent
 groups = json.loads((root / 'groups.json').read_text(encoding='utf-8'))
@@ -23,24 +24,36 @@ if selector not in {'all', *lanes, *groups}:
     sys.exit('Usage: python tests/ui-run.py [functional|visual|release|css|ui|logic|security|build|integration|all] [--results=path]')
 
 results = []
+print(f'Browser selection: {chromium_launch_options()}', flush=True)
 for category, suites in groups.items():
     for item in suites['browser']:
         name, lane = item['file'], item['lane']
         if selector not in ('all', category, lane):
             continue
-        with tempfile.TemporaryFile(mode='w+t') as log:
+        with tempfile.TemporaryFile(mode='w+t', encoding='utf-8') as log:
             begin = time.monotonic()
             proc = subprocess.Popen(
                 [sys.executable, '-u', str(root / name)],
-                stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
-                env={**os.environ, 'WATCHDOG_TEST_BUNDLE': 'stable' if category == 'integration' else 'dev'}
+                stdout=log, stderr=subprocess.STDOUT,
+                start_new_session=(os.name != 'nt'),
+                creationflags=(subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0),
+                env={**os.environ, 'PYTHONIOENCODING': 'utf-8',
+                     'WATCHDOG_TEST_BUNDLE': 'stable' if category == 'integration' else 'dev'}
             )
             timed_out = False
             try:
                 exit_code = proc.wait(timeout=35)
             except subprocess.TimeoutExpired:
                 timed_out = True
-                os.killpg(proc.pid, signal.SIGKILL)
+                if os.name == 'nt':
+                    # Stop the entire Playwright/Chrome process tree on Windows.
+                    subprocess.run(['taskkill', '/PID', str(proc.pid), '/T', '/F'],
+                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                   check=False)
+                    if proc.poll() is None:
+                        proc.kill()
+                else:
+                    os.killpg(proc.pid, signal.SIGKILL)
                 proc.wait(timeout=5)
                 exit_code = -1
             duration_ms = round((time.monotonic() - begin) * 1000)

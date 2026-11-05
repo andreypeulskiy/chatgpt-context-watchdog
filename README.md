@@ -1,6 +1,6 @@
 # ChatGPT Context Watchdog
 
-**Version 1.0.0** · Tampermonkey userscript for local estimates of visible ChatGPT conversation context.
+**Stable release 1.1.0** · Tampermonkey userscript for local estimates of visible ChatGPT conversation context.
 
 Watchdog estimates text, user attachments and images that are available in the page. It provides per-chat summaries, configurable context budgets, calibration, Audit/Repair tools and an optional saved HANDOFF template. Estimates are heuristics; they are not model-reported token counts or remaining context capacity.
 
@@ -8,10 +8,10 @@ Watchdog estimates text, user attachments and images that are available in the p
 
 Choose one Stable build and install it in Tampermonkey:
 
-- [Stable](dist/chatgpt-context-watchdog-1.0.0.user.js)
-- [Stable, minified](dist/chatgpt-context-watchdog-1.0.0.min.user.js) — same behavior, smaller file
+- [Stable](dist/chatgpt-context-watchdog-1.1.0.user.js)
+- [Stable, minified](dist/chatgpt-context-watchdog-1.1.0.min.user.js) — same behavior, smaller file
 
-The minified and regular Stable files have the same Tampermonkey identity. Install only one. The [Dev build](dist/chatgpt-context-watchdog-1.0.0.dev.user.js) adds responsive CSS for narrow screens and is provided for testing; do not enable it alongside Stable.
+The minified and regular Stable files have the same Tampermonkey identity. Install only one. The [Dev build](dist/chatgpt-context-watchdog-1.1.0.dev.user.js) adds responsive CSS for narrow screens and is provided for testing; do not enable it alongside Stable.
 
 ## Build and verify
 
@@ -30,6 +30,19 @@ npm run typecheck:contracts
 `npm run test:node` runs all registered Node suites. Browser tests require Python Playwright and Chromium; `npm run test:release` runs the complete release gate.
 
 The userscript header is the version source. `package.json`, `package-lock.json`, build filenames, `RELEASE-MANIFEST.json` and `SHA256SUMS.txt` should match it.
+
+## File contribution settings (v1.1.0)
+
+In **Context → Files & images**, define **Parsed min–max (%)** and
+**Metadata min–max (%)** for **Other files** and optional extensions such as `.json`.
+Each percent accepts 0–100 with two decimal places; `0.02–0.02` is valid.
+Parsed percentages scale the locally estimated text tokens; metadata percentages
+scale the existing unread-file heuristic (100–100 preserves previous behavior).
+
+Rules are local settings only. The existing file ledger, attachment identification,
+text parsing, image estimates and metadata-only formula remain unchanged.
+Unlisted extensions use the editable **Other files** row. Saving a changed rule
+recalculates the displayed forecast from existing records without rereading files.
 
 ## Privacy
 

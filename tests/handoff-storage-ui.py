@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """HANDOFF's clean-vs-dirty synchronization across external settings updates."""
 from playwright.sync_api import sync_playwright
+from support.browser_launch import chromium_launch_options
 from support.current import SCRIPT
 
 CHAT='11111111-1111-4111-8111-111111111111'
@@ -31,7 +32,7 @@ SCRIPT_INJECT=SCRIPT.replace('(() => {',
  f"(() => {{\nconst location = {{pathname:'/c/{CHAT}',origin:'https://chatgpt.com',href:'https://chatgpt.com/c/{CHAT}'}};", 1)
 
 with sync_playwright() as p:
- browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,
+ browser=p.chromium.launch(**chromium_launch_options(),headless=True,
   args=['--no-sandbox','--disable-dev-shm-usage'])
  for width in (390,1200):
   page=browser.new_page(viewport={'width':width,'height':850})
